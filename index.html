@@ -1,37 +1,637 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Planilha Print Converter — Local</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#122033;font-family:Arial,sans-serif}header{height:74px;background:#fff;border-bottom:1px solid #dbe3ed;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:2}.brand{display:flex;align-items:center;gap:12px;color:#174a7c}.logo{width:40px;height:40px;border-radius:12px;background:#174a7c;color:#fff;display:grid;place-items:center;font-size:21px}.eyebrow{font-size:12px;letter-spacing:2px;font-weight:800}.sub{font-size:11px;color:#718096;margin-top:3px}.pill{background:#ecfdf5;color:#047857;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700}main{max-width:1280px;margin:auto;padding:52px 5%}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:end}.tag{display:inline-block;border:1px solid #dbeafe;background:#eff6ff;color:#174a7c;border-radius:99px;padding:8px 13px;font-size:11px;font-weight:800;letter-spacing:1.5px}.tag b{color:#f5b800}.hero h1{font-size:clamp(42px,5.5vw,72px);line-height:.99;letter-spacing:-3px;margin:22px 0 18px;max-width:680px}.blue{color:#174a7c}.hero p{font-size:18px;line-height:1.8;color:#526276;max-width:610px}.steps{background:#173f68;color:#fff;border-radius:28px;padding:28px;box-shadow:0 20px 45px #173f6830}.steps h2{margin:5px 0 23px;font-size:27px}.stepgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{border:1px solid #ffffff26;background:#ffffff14;border-radius:17px;padding:15px;min-height:98px}.step b{color:#f5b800;font-size:12px}.step span{display:block;margin-top:24px;font-size:13px;font-weight:700}.uploads{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:54px}.drop{background:#fff;border:2px dashed #cbd5e1;border-radius:26px;padding:26px;transition:.18s}.drop:hover{border-color:#174a7c;box-shadow:0 15px 32px #183b5e14}.drop input{display:none}.drophead{display:flex;justify-content:space-between;align-items:start}.icon{width:48px;height:48px;border-radius:16px;background:#eff6ff;color:#174a7c;display:grid;place-items:center;font-size:23px}.optional{color:#a16207;background:#fffbeb;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:700}.required{color:#64748b;background:#f1f5f9;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:700}.drop h2{margin:24px 0 8px;font-size:20px}.drop p{color:#718096;font-size:13px}.choose{margin-top:26px;color:#174a7c;font-size:14px;font-weight:700}.preview{margin-top:38px;background:#fff;border:1px solid #dbe3ed;border-radius:28px;overflow:hidden;box-shadow:0 18px 36px #183b5e12}.previewtop{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:25px;border-bottom:1px solid #e2e8f0}.label{font-size:11px;letter-spacing:2px;color:#174a7c;font-weight:800}.preview h2{margin:5px 0;font-size:25px}.preview small{color:#718096}.actions{display:flex;gap:10px}button{border:0;border-radius:12px;padding:13px 18px;font-weight:800;font-size:13px;cursor:pointer}button.primary{color:#fff;background:#174a7c;box-shadow:0 8px 18px #174a7c30}button.secondary{color:#526276;background:#fff;border:1px solid #dbe3ed}button:disabled{opacity:.4;cursor:not-allowed}.tablewrap{overflow:auto}table{width:100%;min-width:1320px;border-collapse:collapse;font-size:12px}th{padding:13px 12px;color:#fff;background:#2f75b5;white-space:nowrap;text-align:center}th:nth-child(n+11){background:#f5b800}td{padding:11px 12px;border-bottom:1px solid #cbd5e1;text-align:center}tr:nth-child(even) td{background:#d9e1f2}td:nth-child(2),td:nth-child(5),td:nth-child(7){font-weight:700}.empty{text-align:center;padding:72px 20px;color:#718096}.error{margin-top:18px;padding:14px 16px;background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:14px;font-size:13px}@media(max-width:850px){.hero,.uploads{grid-template-columns:1fr}.hero{gap:26px}main{padding-top:35px}.previewtop{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions button{flex:1}.hero h1{letter-spacing:-2px}}
-</style>
-</head>
-<body>
-<header><div class="brand"><div class="logo">▦</div><div><div class="eyebrow">VISION TOWER</div><div class="sub">Planilha Print Converter</div></div></div><div class="pill">100% no navegador</div></header>
-<main><section class="hero"><div><div class="tag"><b>●</b> MODELO INTELIGENTE DE FROTA</div><h1>Do CSV bruto ao Excel <span class="blue">pronto para operar.</span></h1><p>O print serve apenas como referência visual. A ferramenta lê os dados do CSV e cria uma planilha com as colunas, cores, filtros e fonte do modelo.</p></div><div class="steps"><div style="font-size:13px;color:#dbeafe">Como funciona</div><h2>3 passos simples</h2><div class="stepgrid"><div class="step"><b>01</b><span>Envie o CSV</span></div><div class="step"><b>02</b><span>Confira a prévia</span></div><div class="step"><b>03</b><span>Baixe o Excel</span></div></div></div></section>
-<section class="uploads"><label class="drop"><input id="csv" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"><div class="drophead"><div class="icon">▤</div><span class="required">Obrigatório</span></div><h2>1. Planilha de dados</h2><p>Envie um arquivo CSV ou Excel (.xlsx/.xls) exportado do seu sistema de frota.</p><div class="choose" id="csvName">⇧ Selecionar CSV ou Excel</div></label><label class="drop"><input id="image" type="file" accept="image/*"><div class="drophead"><div class="icon" style="background:#fffbeb;color:#a16207">▧</div><span class="optional">Opcional</span></div><h2>2. Print de referência</h2><p>O print é usado apenas como guia do padrão visual.</p><div class="choose" id="imageName">⇧ Selecionar imagem</div></label></section>
-<div id="error"></div><section class="preview"><div class="previewtop"><div><div class="label">PRÉVIA DO RESULTADO</div><h2>Modelo operacional</h2><small id="count">Envie um CSV para visualizar os registros aqui.</small></div><div class="actions"><button id="clear" class="secondary" disabled>Limpar</button><button id="download" class="primary" disabled>⇩ Baixar Excel formatado</button></div></div><div class="tablewrap" id="table"><div class="empty">A prévia aparece aqui<br><small>Os dados vêm do CSV; o print é só referência.</small></div></div></section><p style="color:#94a3b8;font-size:11px;margin-top:26px">Processamento local no navegador · Nenhum arquivo é enviado para um servidor.</p></main>
-<script>
-const headers=["IT","HORA","UNIDADE","FROTA","PLACA","MOTORISTA","STATUS","SITUAÇÃO","CIDADE","TRAVADO","CHEGADA NO CLIENTE","PERMANÊNCIA NO CLIENTE","CLIENTE"];let output=[];
-const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-function parseLine(line,separator=';'){let a=[],v='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'&&line[i+1]==='"'){v+='"';i++}else if(c==='"')q=!q;else if(c===separator&&!q){a.push(v.trim());v=''}else v+=c}a.push(v.trim());return a.map(x=>x.replace(/^"|"$/g,''))}
-function parseCsv(text){let ls=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(Boolean);if(ls[0]?.toLowerCase().startsWith('sep='))ls.shift();let first=ls[0]||'',separator=(first.split(';').length>=first.split(',').length)?';':',';let hs=parseLine(ls.shift()||'',separator);return ls.map(l=>Object.fromEntries(hs.map((h,i)=>[h,parseLine(l,separator)[i]||'']))).filter(r=>Object.values(r).some(Boolean))}
-async function readRows(file){let ext=file.name.toLowerCase().split('.').pop();if(ext==='xlsx'||ext==='xls'){let buffer=await file.arrayBuffer(),workbook=XLSX.read(buffer,{type:'array'}),sheet=workbook.Sheets[workbook.SheetNames[0]];return XLSX.utils.sheet_to_json(sheet,{defval:'',raw:false})}return parseCsv(await file.text())}
-function get(r,n){let k=Object.keys(r).find(x=>norm(x)===norm(n));return k?r[k]||'':''}
-function situation(s){let n=norm(s);if(n.includes('carregado'))return'CARREGADO';if(n.includes('cliente'))return'NO CLIENTE';if(n.includes('fabrica'))return'FÁBRICA';if(n.includes('extra'))return'EXTRA';if(n.includes('vazio'))return'VAZIO';return(s||'').toUpperCase()}
-function city(r){let x=get(r,'Localização atual').split(' - ').map(v=>v.trim()).filter(Boolean),state=x.findIndex(v=>/^[A-Za-z]{2}$/.test(v));if(state>0){let c=x[state-1];if(!/^\d/.test(c))return c.toUpperCase()}let n=x.filter(v=>!/^\d/.test(v)&&!/^brasil$/i.test(v));return(n[n.length-1]||'').toUpperCase()}
-function mapRows(rows){return rows.map((r,i)=>({IT:''+(i+1),HORA:'',UNIDADE:get(r,'Unidade').toUpperCase(),FROTA:get(r,'Frota'),PLACA:get(r,'Placa').toUpperCase(),MOTORISTA:get(r,'Motorista').toUpperCase(),STATUS:get(r,'Movimento').toUpperCase(),SITUAÇÃO:situation(get(r,'Situação operacional')),CIDADE:city(r),TRAVADO:norm(get(r,'Rastreador')).includes('travado')?'SIM':'NÃO','CHEGADA NO CLIENTE':'','PERMANÊNCIA NO CLIENTE':'',CLIENTE:(get(r,'Cliente')||get(r,'Último ponto operacional')).toUpperCase()}))}
-function render(){let html='<table><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+output.slice(0,8).map(r=>'<tr>'+headers.map(h=>'<td>'+((r[h]||'—').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])))+'</td>').join('')+'</tr>').join('')}</tbody></table>';document.getElementById('table').innerHTML=html;document.getElementById('count').textContent=output.length+' registros prontos para exportação.';document.getElementById('download').disabled=false;document.getElementById('clear').disabled=false}
-function exportXlsx(){
-  const horaAtual=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  let data=[headers,...output.map(r=>headers.map(h=>h==='HORA'?horaAtual:r[h]))],ws=XLSX.utils.aoa_to_sheet(data),b={style:'thin',color:{rgb:'1F1F1F'}};
-  ws['!cols']=[6,12,18,10,12,25,12,16,22,10,20,22,18].map(wch=>({wch}));
-  ws['!autofilter']={ref:'A1:M'+(output.length+1)};ws['!freeze']={xSplit:0,ySplit:1};
-  for(let c=0;c<headers.length;c++){let x=ws[XLSX.utils.encode_cell({r:0,c})];x.s={fill:{fgColor:{rgb:c>=10?'FFC000':'2F75B5'}},font:{bold:true,color:{rgb:'FFFF00'},name:'Aptos Black',sz:11},alignment:{horizontal:'center',vertical:'center',wrapText:true},border:{top:b,bottom:b,left:b,right:b}}}
-  for(let r=1;r<=output.length;r++)for(let c=0;c<headers.length;c++){let x=ws[XLSX.utils.encode_cell({r,c})];x.s={fill:{fgColor:{rgb:r%2?'FFFFFF':'D9E1F2'}},font:{name:'Aptos Black',sz:11,bold:true},alignment:{horizontal:'center',vertical:'center',wrapText:true},border:{top:b,bottom:b,left:b,right:b}}}
-  ws['!rows']=[{hpt:34},...output.map(()=>({hpt:30}))];let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Modelo');XLSX.writeFile(wb,'planilha-modelo-print.xlsx')
-}
-document.getElementById('csv').onchange=async e=>{let f=e.target.files[0];if(!f)return;document.getElementById('csvName').textContent='✓ '+f.name;try{let rows=await readRows(f);if(!rows.length)throw new Error('empty');output=mapRows(rows);if(!output.length)throw new Error('columns');render();document.getElementById('error').innerHTML=''}catch(err){output=[];document.getElementById('download').disabled=true;document.getElementById('clear').disabled=true;document.getElementById('error').innerHTML='<div class="error">Não foi possível ler a planilha. Use CSV separado por ponto e vírgula ou Excel (.xlsx/.xls) com a primeira linha contendo os nomes das colunas.</div>'}};document.getElementById('image').onchange=e=>{if(e.target.files[0])document.getElementById('imageName').textContent='✓ '+e.target.files[0].name};document.getElementById('download').onclick=exportXlsx;document.getElementById('clear').onclick=()=>{output=[];document.getElementById('table').innerHTML='<div class="empty">A prévia aparece aqui<br><small>Os dados vêm do CSV; o print é só referência.</small></div>';document.getElementById('count').textContent='Envie um CSV para visualizar os registros aqui.';document.getElementById('download').disabled=true;document.getElementById('clear').disabled=true;document.getElementById('csv').value='';document.getElementById('csvName').textContent='⇧ Selecionar CSV ou Excel'};
-</script></body></html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Planilha Print Converter — Local</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #122033;
+        font-family: Arial, sans-serif;
+      }
+      header {
+        height: 74px;
+        background: #fff;
+        border-bottom: 1px solid #dbe3ed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5%;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #174a7c;
+      }
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: #174a7c;
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 21px;
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 2px;
+        font-weight: 800;
+      }
+      .sub {
+        font-size: 11px;
+        color: #718096;
+        margin-top: 3px;
+      }
+      .pill {
+        background: #ecfdf5;
+        color: #047857;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      main {
+        max-width: 1280px;
+        margin: auto;
+        padding: 52px 5%;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 48px;
+        align-items: end;
+      }
+      .tag {
+        display: inline-block;
+        border: 1px solid #dbeafe;
+        background: #eff6ff;
+        color: #174a7c;
+        border-radius: 99px;
+        padding: 8px 13px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+      }
+      .tag b {
+        color: #f5b800;
+      }
+      .hero h1 {
+        font-size: clamp(42px, 5.5vw, 72px);
+        line-height: 0.99;
+        letter-spacing: -3px;
+        margin: 22px 0 18px;
+        max-width: 680px;
+      }
+      .blue {
+        color: #174a7c;
+      }
+      .hero p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #526276;
+        max-width: 610px;
+      }
+      .steps {
+        background: #173f68;
+        color: #fff;
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 20px 45px #173f6830;
+      }
+      .steps h2 {
+        margin: 5px 0 23px;
+        font-size: 27px;
+      }
+      .stepgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .step {
+        border: 1px solid #ffffff26;
+        background: #ffffff14;
+        border-radius: 17px;
+        padding: 15px;
+        min-height: 98px;
+      }
+      .step b {
+        color: #f5b800;
+        font-size: 12px;
+      }
+      .step span {
+        display: block;
+        margin-top: 24px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .uploads {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 54px;
+      }
+      .drop {
+        background: #fff;
+        border: 2px dashed #cbd5e1;
+        border-radius: 26px;
+        padding: 26px;
+        transition: 0.18s;
+      }
+      .drop:hover {
+        border-color: #174a7c;
+        box-shadow: 0 15px 32px #183b5e14;
+      }
+      .drop input {
+        display: none;
+      }
+      .drophead {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+      }
+      .icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: #eff6ff;
+        color: #174a7c;
+        display: grid;
+        place-items: center;
+        font-size: 23px;
+      }
+      .optional {
+        color: #a16207;
+        background: #fffbeb;
+        padding: 6px 10px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .required {
+        color: #64748b;
+        background: #f1f5f9;
+        padding: 6px 10px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .drop h2 {
+        margin: 24px 0 8px;
+        font-size: 20px;
+      }
+      .drop p {
+        color: #718096;
+        font-size: 13px;
+      }
+      .choose {
+        margin-top: 26px;
+        color: #174a7c;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .preview {
+        margin-top: 38px;
+        background: #fff;
+        border: 1px solid #dbe3ed;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 18px 36px #183b5e12;
+      }
+      .previewtop {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 25px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #174a7c;
+        font-weight: 800;
+      }
+      .preview h2 {
+        margin: 5px 0;
+        font-size: 25px;
+      }
+      .preview small {
+        color: #718096;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        border: 0;
+        border-radius: 12px;
+        padding: 13px 18px;
+        font-weight: 800;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      button.primary {
+        color: #fff;
+        background: #174a7c;
+        box-shadow: 0 8px 18px #174a7c30;
+      }
+      button.secondary {
+        color: #526276;
+        background: #fff;
+        border: 1px solid #dbe3ed;
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .tablewrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        min-width: 1200px;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+      th {
+        padding: 13px 12px;
+        color: #fff;
+        background: #2f75b5;
+        white-space: nowrap;
+        text-align: center;
+      }
+      th:nth-child(n + 10) {
+        background: #f5b800;
+      }
+      td {
+        padding: 11px 12px;
+        border-bottom: 1px solid #cbd5e1;
+        text-align: center;
+      }
+      tr:nth-child(even) td {
+        background: #d9e1f2;
+      }
+      td:nth-child(2),
+      td:nth-child(5),
+      td:nth-child(7) {
+        font-weight: 700;
+      }
+      .empty {
+        text-align: center;
+        padding: 72px 20px;
+        color: #718096;
+      }
+      .error {
+        margin-top: 18px;
+        padding: 14px 16px;
+        background: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+        border-radius: 14px;
+        font-size: 13px;
+      }
+      @media (max-width: 850px) {
+        .hero,
+        .uploads {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          gap: 26px;
+        }
+        main {
+          padding-top: 35px;
+        }
+        .previewtop {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .actions {
+          width: 100%;
+        }
+        .actions button {
+          flex: 1;
+        }
+        .hero h1 {
+          letter-spacing: -2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="logo">▦</div>
+        <div>
+          <div class="eyebrow">VISION TOWER</div>
+          <div class="sub">Planilha Print Converter</div>
+        </div>
+      </div>
+      <div class="pill">100% no navegador</div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="tag"><b>●</b> MODELO INTELIGENTE DE FROTA</div>
+          <h1>
+            Do CSV bruto ao Excel <span class="blue">pronto para operar.</span>
+          </h1>
+          <p>
+            O print serve apenas como referência visual. A ferramenta lê os
+            dados do CSV e cria uma planilha com as colunas, cores, filtros e
+            fonte do modelo.
+          </p>
+        </div>
+        <div class="steps">
+          <div style="font-size: 13px; color: #dbeafe">Como funciona</div>
+          <h2>3 passos simples</h2>
+          <div class="stepgrid">
+            <div class="step"><b>01</b><span>Envie o CSV</span></div>
+            <div class="step"><b>02</b><span>Confira a prévia</span></div>
+            <div class="step"><b>03</b><span>Baixe o Excel</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="uploads">
+        <label class="drop"
+          ><input id="csv" type="file" accept=".csv,text/csv" />
+          <div class="drophead">
+            <div class="icon">▤</div>
+            <span class="required">Obrigatório</span>
+          </div>
+          <h2>1. Planilha de dados</h2>
+          <p>Envie o CSV exportado do seu sistema de frota.</p>
+          <div class="choose" id="csvName">⇧ Selecionar arquivo CSV</div></label
+        ><label class="drop"
+          ><input id="image" type="file" accept="image/*" />
+          <div class="drophead">
+            <div class="icon" style="background: #fffbeb; color: #a16207">
+              ▧
+            </div>
+            <span class="optional">Opcional</span>
+          </div>
+          <h2>2. Print de referência</h2>
+          <p>O print é usado apenas como guia do padrão visual.</p>
+          <div class="choose" id="imageName">⇧ Selecionar imagem</div></label
+        >
+      </section>
+      <div id="error"></div>
+      <section class="preview">
+        <div class="previewtop">
+          <div>
+            <div class="label">PRÉVIA DO RESULTADO</div>
+            <h2>Modelo operacional</h2>
+            <small id="count"
+              >Envie um CSV para visualizar os registros aqui.</small
+            >
+          </div>
+          <div class="actions">
+            <button id="clear" class="secondary" disabled>Limpar</button
+            ><button id="download" class="primary" disabled>
+              ⇩ Baixar Excel formatado
+            </button>
+          </div>
+        </div>
+        <div class="tablewrap" id="table">
+          <div class="empty">
+            A prévia aparece aqui<br /><small
+              >Os dados vêm do CSV; o print é só referência.</small
+            >
+          </div>
+        </div>
+      </section>
+      <p style="color: #94a3b8; font-size: 11px; margin-top: 26px">
+        Processamento local no navegador · Nenhum arquivo é enviado para um
+        servidor.
+      </p>
+    </main>
+    <script>
+      const headers = [
+        "IT",
+        "UNIDADE",
+        "FROTA",
+        "PLACA",
+        "MOTORISTA",
+        "STATUS",
+        "SITUAÇÃO",
+        "CIDADE",
+        "TRAVADO",
+        "HORA",
+        "CHEGADA NO CLIENTE",
+        "PERMANÊNCIA NO CLIENTE",
+        "CLIENTE",
+      ];
+      let output = [];
+      const norm = (s) =>
+        (s || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .trim();
+      function parseLine(line) {
+        let a = [],
+          v = "",
+          q = false;
+        for (let i = 0; i < line.length; i++) {
+          let c = line[i];
+          if (c === '"' && line[i + 1] === '"') {
+            v += '"';
+            i++;
+          } else if (c === '"') q = !q;
+          else if (c === ";" && !q) {
+            a.push(v.trim());
+            v = "";
+          } else v += c;
+        }
+        a.push(v.trim());
+        return a.map((x) => x.replace(/^"|"$/g, ""));
+      }
+      function parseCsv(text) {
+        let ls = text
+          .replace(/^\uFEFF/, "")
+          .split(/\r?\n/)
+          .filter(Boolean);
+        if (ls[0]?.toLowerCase().startsWith("sep=")) ls.shift();
+        let hs = parseLine(ls.shift() || "");
+        return ls.map((l) =>
+          Object.fromEntries(hs.map((h, i) => [h, parseLine(l)[i] || ""])),
+        );
+      }
+      function get(r, n) {
+        let k = Object.keys(r).find((x) => norm(x) === norm(n));
+        return k ? r[k] || "" : "";
+      }
+      function situation(s) {
+        let n = norm(s);
+        if (n.includes("carregado")) return "CARREGADO";
+        if (n.includes("cliente")) return "NO CLIENTE";
+        if (n.includes("fabrica")) return "FÁBRICA";
+        if (n.includes("extra")) return "EXTRA";
+        if (n.includes("vazio")) return "VAZIO";
+        return (s || "").toUpperCase();
+      }
+      function city(r) {
+        let x = get(r, "Localização atual")
+            .split(" - ")
+            .map((v) => v.trim())
+            .filter(Boolean),
+          state = x.findIndex((v) => /^[A-Za-z]{2}$/.test(v));
+        if (state > 0) {
+          let c = x[state - 1];
+          if (!/^\d/.test(c)) return c.toUpperCase();
+        }
+        let n = x.filter((v) => !/^\d/.test(v) && !/^brasil$/i.test(v));
+        return (n[n.length - 1] || "").toUpperCase();
+      }
+      function mapRows(rows) {
+        return rows.map((r, i) => ({
+          IT: "" + (i + 1),
+          HORA: "",
+          UNIDADE: get(r, "Unidade").toUpperCase(),
+          FROTA: get(r, "Frota"),
+          PLACA: get(r, "Placa").toUpperCase(),
+          MOTORISTA: get(r, "Motorista").toUpperCase(),
+          STATUS: get(r, "Movimento").toUpperCase(),
+          SITUAÇÃO: situation(get(r, "Situação operacional")),
+          CIDADE: city(r),
+          TRAVADO: norm(get(r, "Rastreador")).includes("travado")
+            ? "SIM"
+            : "NÃO",
+          "CHEGADA NO CLIENTE": "",
+          "PERMANÊNCIA NO CLIENTE": "",
+          CLIENTE: (
+            get(r, "Cliente") || get(r, "Último ponto operacional")
+          ).toUpperCase(),
+        }));
+      }
+      function render() {
+        let html =
+          "<table><thead><tr>" +
+          headers.map((h) => "<th>" + h + "</th>").join("") +
+          "</tr></thead><tbody>" +
+          output
+            .slice(0, 8)
+            .map(
+              (r) =>
+                "<tr>" +
+                headers
+                  .map(
+                    (h) =>
+                      "<td>" +
+                      (r[h] || "—").replace(
+                        /[&<>]/g,
+                        (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[m],
+                      ) +
+                      "</td>",
+                  )
+                  .join("") +
+                "</tr>",
+            )
+            .join("") +
+          "</tbody></table>";
+        document.getElementById("table").innerHTML = html;
+        document.getElementById("count").textContent =
+          output.length + " registros prontos para exportação.";
+        document.getElementById("download").disabled = false;
+        document.getElementById("clear").disabled = false;
+      }
+      function exportXlsx() {
+        const horaAtual = new Date().toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        let data = [
+            headers,
+            ...output.map((r) =>
+              headers.map((h) => (h === "HORA" ? horaAtual : r[h])),
+            ),
+          ],
+          ws = XLSX.utils.aoa_to_sheet(data),
+          b = { style: "thin", color: { rgb: "1F1F1F" } };
+        ws["!cols"] = [6, 18, 10, 12, 25, 12, 16, 22, 10, 12, 20, 22, 18].map(
+          (wch) => ({ wch }),
+        );
+        ws["!autofilter"] = { ref: "A1:M" + (output.length + 1) };
+        ws["!freeze"] = { xSplit: 0, ySplit: 1 };
+        for (let c = 0; c < headers.length; c++) {
+          let x = ws[XLSX.utils.encode_cell({ r: 0, c })];
+          x.s = {
+            fill: { fgColor: { rgb: c >= 10 ? "FFC000" : "2F75B5" } },
+            font: {
+              bold: true,
+              color: { rgb: "FFFF00" },
+              name: "Aptos Black",
+              sz: 11,
+            },
+            alignment: {
+              horizontal: "center",
+              vertical: "center",
+              wrapText: true,
+            },
+            border: { top: b, bottom: b, left: b, right: b },
+          };
+        }
+        for (let r = 1; r <= output.length; r++)
+          for (let c = 0; c < headers.length; c++) {
+            let x = ws[XLSX.utils.encode_cell({ r, c })];
+            x.s = {
+              fill: { fgColor: { rgb: r % 2 ? "FFFFFF" : "D9E1F2" } },
+              font: { name: "Aptos Black", sz: 11, bold: true },
+              alignment: {
+                horizontal: "center",
+                vertical: "center",
+                wrapText: true,
+              },
+              border: { top: b, bottom: b, left: b, right: b },
+            };
+          }
+        ws["!rows"] = [{ hpt: 34 }, ...output.map(() => ({ hpt: 30 }))];
+        let wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Modelo");
+        XLSX.writeFile(wb, "planilha-modelo-print.xlsx");
+      }
+      document.getElementById("csv").onchange = async (e) => {
+        let f = e.target.files[0];
+        if (!f) return;
+        document.getElementById("csvName").textContent = "✓ " + f.name;
+        try {
+          output = mapRows(parseCsv(await f.text()));
+          render();
+          document.getElementById("error").innerHTML = "";
+        } catch (err) {
+          document.getElementById("error").innerHTML =
+            '<div class="error">Não foi possível ler este CSV. Confira se ele usa ponto e vírgula como separador.</div>';
+        }
+      };
+      document.getElementById("image").onchange = (e) => {
+        if (e.target.files[0])
+          document.getElementById("imageName").textContent =
+            "✓ " + e.target.files[0].name;
+      };
+      document.getElementById("download").onclick = exportXlsx;
+      document.getElementById("clear").onclick = () => {
+        output = [];
+        document.getElementById("table").innerHTML =
+          '<div class="empty">A prévia aparece aqui<br><small>Os dados vêm do CSV; o print é só referência.</small></div>';
+        document.getElementById("count").textContent =
+          "Envie um CSV para visualizar os registros aqui.";
+        document.getElementById("download").disabled = true;
+        document.getElementById("clear").disabled = true;
+        document.getElementById("csv").value = "";
+        document.getElementById("csvName").textContent =
+          "⇧ Selecionar arquivo CSV";
+      };
+    </script>
+  </body>
+</html>
